@@ -1,5 +1,5 @@
 """
-Video frame loading for Xperience-2.7M.
+Video frame loading for Xperience-10M.
 """
 
 import os

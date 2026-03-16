@@ -1,5 +1,5 @@
 """
-Xperience-2.7M: Rerun blueprint and visualization helpers.
+Xperience-10M: Rerun blueprint and visualization helpers.
 """
 
 import cv2

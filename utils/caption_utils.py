@@ -1,5 +1,5 @@
 """
-Caption loading from annotation.hdf5 for Xperience-2.7M.
+Caption loading from annotation.hdf5 for Xperience-10M.
 """
 
 import json

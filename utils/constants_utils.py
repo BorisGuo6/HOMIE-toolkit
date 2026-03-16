@@ -1,5 +1,5 @@
 """
-Skeleton and joint constants for Xperience-2.7M.
+Skeleton and joint constants for Xperience-10M.
 """
 
 import numpy as np

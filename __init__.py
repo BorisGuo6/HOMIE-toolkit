@@ -1,5 +1,5 @@
 """
-Xperience-2.7M: tools for reading and visualizing released data.
+Xperience-10M: tools for reading and visualizing released data.
   - data_loader: load annotation.hdf5, calibration, video frames, point cloud from HDF5
   - visualization: depth/skeleton/pointcloud helpers and Rerun blueprint
 """

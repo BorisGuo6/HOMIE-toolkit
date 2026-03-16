@@ -1,5 +1,5 @@
 """
-Xperience-2.7M: data loading API.
+Xperience-10M: data loading API.
 
 Read annotation.hdf5 and related assets.
 """

@@ -1,5 +1,5 @@
 """
-Example: How to read Xperience-2.7M data from annotation.hdf5.
+Example: How to read Xperience-10M data from annotation.hdf5.
 
 This script demonstrates:
   1. Listing contents of annotation.hdf5
@@ -27,7 +27,7 @@ from data_loader import (
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Example: read Xperience-2.7M annotation and list/use data.")
+    parser = argparse.ArgumentParser(description="Example: read Xperience-10M annotation and list/use data.")
     parser.add_argument("--data_root", type=str, required=True, help="Episode folder (contains annotation.hdf5)")
     args = parser.parse_args()
 

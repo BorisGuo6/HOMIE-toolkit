@@ -1,5 +1,5 @@
 """
-Example: Load Xperience-2.7M data and visualize to Rerun .rrd.
+Example: Load Xperience-10M data and visualize to Rerun .rrd.
 
 Run from package root:
   python examples/example_visualize_rrd.py --data_root /path/to/episode
@@ -124,7 +124,7 @@ def get_stereo_video_path(data_root, base_name, log_image_scale=1.0):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Example: visualize Xperience-2.7M data to Rerun RRD.")
+    parser = argparse.ArgumentParser(description="Example: visualize Xperience-10M data to Rerun RRD.")
     parser.add_argument("--data_root", type=str, required=True, help="Episode folder (contains annotation.hdf5)")
     parser.add_argument("--output_rrd", type=str, default="vis.rrd", help="Output .rrd path")
     parser.add_argument("--num_frames", type=int, default=-1, help="Number of frames to log")
@@ -247,7 +247,7 @@ def main():
     n_seg = len(caption_segment_boundaries) if caption_segment_boundaries else 0
     print(f"  {_key('caption_segments')}: {_val(f'({n_seg},)')}")
 
-    rr.init("Xperience-2.7M")
+    rr.init("Xperience-10M")
     rr.send_blueprint(create_blueprint(
         show_fisheye=args.show_fisheye,
         show_stereo=args.show_stereo,

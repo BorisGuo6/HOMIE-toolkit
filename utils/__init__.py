@@ -1,5 +1,5 @@
 """
-Xperience-2.7M utilities: constants, calibration, video, caption.
+Xperience-10M utilities: constants, calibration, video, caption.
 """
 
 from .constants_utils import (

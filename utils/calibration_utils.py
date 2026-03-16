@@ -1,5 +1,5 @@
 """
-Calibration and camera pose utilities for Xperience-2.7M.
+Calibration and camera pose utilities for Xperience-10M.
 """
 
 import numpy as np
