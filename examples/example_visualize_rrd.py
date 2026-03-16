@@ -6,10 +6,7 @@ Run from package root:
   Then open: rerun vis.rrd
 """
 
-import json
 import os
-import shutil
-import subprocess
 import sys
 import argparse
 from pathlib import Path
@@ -44,83 +41,6 @@ from visualization import (
     scale_image,
     transform_points_to_world,
 )
-
-
-def create_for_rrd_video(input_video_path, output_video_path, scale_factor=1.0, ffmpeg_path=None):
-    """
-    Create a RRD-compatible video using ffmpeg (libx264, yuv420p, faststart).
-    When scale_factor < 1.0, scales the video; otherwise re-encodes only.
-    Returns True if successful.
-    """
-    if ffmpeg_path is None:
-        ffmpeg_path = shutil.which("ffmpeg")
-    if not ffmpeg_path:
-        return False
-    ffprobe_path = shutil.which("ffprobe")
-    if not ffprobe_path:
-        return False
-    input_video_path = str(input_video_path)
-    output_video_path = str(output_video_path)
-    try:
-        cmd = [
-            ffprobe_path, "-v", "error", "-select_streams", "v:0",
-            "-show_entries", "stream=width,height", "-of", "json", input_video_path,
-        ]
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
-        if result.returncode != 0 or not result.stdout:
-            return False
-        data = json.loads(result.stdout)
-        if not data.get("streams"):
-            return False
-        w = data["streams"][0].get("width", 0)
-        h = data["streams"][0].get("height", 0)
-        if w <= 0 or h <= 0:
-            return False
-        if scale_factor < 1.0:
-            new_w = int(w * scale_factor)
-            new_h = int(h * scale_factor)
-            if new_w % 2 != 0:
-                new_w += 1
-            if new_h % 2 != 0:
-                new_h += 1
-            vf = f"scale={new_w}:{new_h}"
-        else:
-            vf = None
-        cmd = [
-            ffmpeg_path, "-y", "-i", input_video_path,
-            "-c:v", "libx264", "-preset", "medium", "-crf", "23",
-            "-pix_fmt", "yuv420p", "-movflags", "+faststart",
-        ]
-        if vf:
-            cmd.extend(["-vf", vf])
-        cmd.append(output_video_path)
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=3600)
-        if result.returncode != 0:
-            err = (result.stderr or result.stdout or "").strip()
-            if err:
-                print(f"ffmpeg stderr: {err[-800:]}")
-            return False
-        return True
-    except Exception as e:
-        print(f"ffmpeg error: {e}")
-        return False
-
-
-def get_stereo_video_path(data_root, base_name, log_image_scale=1.0):
-    """
-    Always run ffmpeg once on {base_name}_for_rrd.mp4 (re-encode and optionally scale).
-    Output is written to a temp file (deleted after use). Returns path string or None if source missing.
-    """
-    orig = Path(data_root) / f"{base_name}_for_rrd.mp4"
-    if not orig.exists():
-        return None
-    scale_str = f"{log_image_scale:.2f}".replace(".", "_")
-    new_path = orig.parent / f"{orig.stem}_vis_{scale_str}{orig.suffix}"
-    print(f"Creating {new_path.name} with ffmpeg from {orig.name} (libx264, yuv420p, faststart)...")
-    if create_for_rrd_video(orig, new_path, scale_factor=log_image_scale):
-        return str(new_path)
-    print(f"Warning: ffmpeg failed for {new_path.name}, using {orig.name}")
-    return str(orig)
 
 
 def main():
@@ -318,8 +238,8 @@ def main():
 
     rr.set_time("stable_time", duration=0)
 
-    stereo_left_path = get_stereo_video_path(data_root, "stereo_left", LOG_IMAGE_SCALE) if args.show_stereo else None
-    stereo_right_path = get_stereo_video_path(data_root, "stereo_right", LOG_IMAGE_SCALE) if args.show_stereo else None
+    stereo_left_path = str(data_root / "stereo_left.mp4") if args.show_stereo and (data_root / "stereo_left.mp4").exists() else None
+    stereo_right_path = str(data_root / "stereo_right.mp4") if args.show_stereo and (data_root / "stereo_right.mp4").exists() else None
 
     # AssetVideo + VideoFrameReference: avoid decoding every frame (same as run_vis.py), much faster.
     stereo_left_asset = None
@@ -621,14 +541,6 @@ def main():
 
     print(f"{_sec('Saved')} to {_val(str(output_path))}")
     print(f"{_sec('Open with')}: {_val('rerun ' + str(output_path))}")
-
-    # Remove temporary rescaled videos (created when LOG_IMAGE_SCALE < 1.0)
-    for path in (stereo_left_path, stereo_right_path):
-        if path and "_vis_" in path and os.path.isfile(path):
-            try:
-                os.remove(path)
-            except OSError:
-                pass
 
 
 if __name__ == "__main__":
