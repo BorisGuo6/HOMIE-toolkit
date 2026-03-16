@@ -1,6 +1,6 @@
 # HOMIE-toolkit
 
-Tools for **reading** and **visualizing** HOMIE / Xperience-2.7M data.
+Tools for **reading** and **visualizing** [Xperience-10M](https://huggingface.co/datasets/ropedia-ai/xperience-10m) data.
 
 - Load annotation and use the data in your own scripts (export, training, custom viz)
 - Reuse visualization helpers (depth colormap, skeleton, point cloud) with Rerun
@@ -22,6 +22,8 @@ pip install -r requirements.txt
 ```
 
 ## Run examples (from package root)
+
+Download sample data [here](https://huggingface.co/datasets/ropedia-ai/xperience-10m-sample).
 
 ```bash
 # List and load annotation
