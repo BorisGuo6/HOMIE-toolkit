@@ -1,9 +1,9 @@
 <p align="center">
   <a href="https://ropedia.com/">
-    <img src="assets/logo.svg" alt="HOMIE-toolkit logo" width="400" />
+    <img src="assets/logo.png" alt="HOMIE-toolkit logo" width="400" />
   </a>
   <br />
-  <em>From Xperience to Physical and Spatial Intelligence</em>
+  <em>Interactive Intelligence from Human Xperience</em>
 </p>
 
 # HOMIE-toolkit
