@@ -53,10 +53,10 @@ Example output (top-level structure + loaded summary):
   caption: ...          metadata: ...
 
 --- Loaded data summary ---
-  Frames (img_names): 4063
-  R_c2w_all: (4063, 3, 3)   t_c2w_all: (4063, 3)
-  Hand left/right joints: (4063, 21, 3)   Full-body keypoints: (4063, 52, 3)
-  Contacts: (4063, 21)   Depth: lazy loader, 4063 frames   IMU: 40535 samples
+  Frames (img_names): N
+  R_c2w_all: (N, 3, 3)   t_c2w_all: (N, 3)
+  Hand left/right joints: (N, 21, 3)   Full-body keypoints: (N, 52, 3)
+  Contacts: (N, 21)   Depth: lazy loader, N frames   IMU: M samples
 
 --- Calibration ---
   cam01.K, cam0–cam3 T_c_b: available
