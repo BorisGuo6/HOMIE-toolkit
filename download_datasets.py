@@ -7,9 +7,11 @@ This script supports:
 2. xperience-10m: gated full dataset, download a single episode after auth
 """
 
-import os
 import sys
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+DATA_ROOT = PROJECT_ROOT / "data"
 
 SAMPLE_FILES = [
     "README.md",
@@ -125,12 +127,12 @@ def main():
     datasets = [
         {
             "id": "ropedia-ai/xperience-10m-sample",
-            "path": "/home/boris/data/xperience-10m-sample",
+            "path": str(DATA_ROOT / "xperience-10m-sample"),
             "description": "Public sample episode (no auth required)",
         },
         {
             "id": "ropedia-ai/xperience-10m",
-            "path": "/home/boris/data/xperience-10m",
+            "path": str(DATA_ROOT / "xperience-10m"),
             "description": "Gated full dataset (download one episode after auth)",
         },
     ]
@@ -202,12 +204,12 @@ def main():
         print("NEXT STEPS")
         print("="*60)
         print("\n1. Public sample episode:")
-        print("   python examples/example_load_annotation.py --data_root /home/boris/data/xperience-10m-sample")
+        print(f"   .venv/bin/python examples/example_load_annotation.py --data_root {DATA_ROOT / 'xperience-10m-sample'}")
         print("\n2. Full dataset episode:")
-        print("   python examples/example_load_annotation.py --data_root /home/boris/data/xperience-10m/<session_id>/epN")
+        print(f"   .venv/bin/python examples/example_load_annotation.py --data_root {DATA_ROOT / 'xperience-10m' / '<session_id>' / 'epN'}")
         print("\n3. Visualize with Rerun:")
-        print("   python examples/example_visualize_rrd.py --data_root /path/to/episode --output_rrd vis.rrd")
-        print("   rerun vis.rrd")
+        print("   .venv/bin/python examples/example_visualize_rrd.py --data_root data/xperience-10m-sample --output_rrd visualization.rrd")
+        print(f"   rerun {DATA_ROOT / 'xperience-10m-sample' / 'visualization.rrd'}")
 
 
 if __name__ == "__main__":
